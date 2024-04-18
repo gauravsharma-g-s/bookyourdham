@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-function MobileOrderSummary({ setCurrentStep }) {
+function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
     // State variables 
     const [coupon, setCoupon] = useState(''); // Input field value
     const [couponStatus, setCouponStatus] = useState(null); // Coupon status: 'applied', 'wrong'
@@ -18,7 +18,7 @@ function MobileOrderSummary({ setCurrentStep }) {
     const itemCount = cart?.items?.length
     // Calculate total price of items in the cart
     const totalPrice = cart?.items?.reduce((sum, cartItem) => sum + cartItem.price, 0)
-    const [subTotal, setsubTotal] = useState(totalPrice)
+    setsubTotal(totalPrice)
     const [discount, setDiscount] = useState(0)
 
     // Sub-total price after discount
@@ -101,8 +101,8 @@ function MobileOrderSummary({ setCurrentStep }) {
                 )}
 
                 {/* Subtotal and proceed to pay button */}
-                {discount!=0 &&<h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
-                <h2 className='text-xl mt-6'>Sub Total &#x20b9; {subTotal}</h2>
+                {discount!==0 &&<h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
+                <h2 className='text-xl mt-6'>Sub Total &#x20b9; {subtotal}</h2>
                 <button
                     className='bg-red-500 text-white py-2 px-[4rem] rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500 mt-8'
                     onClick={goToAddress}

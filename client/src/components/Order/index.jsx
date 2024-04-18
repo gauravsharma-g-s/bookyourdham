@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
 import Stepper from './Stepper';
 import OrderSummary from 'components/OrderSummary';
 import Address from 'components/Address';
-import Payment from 'components/Payment';
 import PaymentTabs from 'components/Payment/PaymentTab';
 
-function Order({ setCartEmpty, orderDetails, setOrderDetails, currentStep, goToNextStep, goToPreviousStep, NUMBER_OF_STEPS }) {
-  const [subtotal, setsubtotal] = useState(0)
+function Order({ subtotal, setsubtotal,setCartEmpty, orderDetails, setOrderDetails, currentStep, goToNextStep, goToPreviousStep, NUMBER_OF_STEPS }) {
+  
   return (
     <div className='hidden sm:block w-[50%]'>
       <div className='w-[100%] flex mt-8 gap-8 sm:ml-[2.5rem] md:ml-[4rem]'>

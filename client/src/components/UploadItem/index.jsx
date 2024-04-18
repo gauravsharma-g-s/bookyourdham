@@ -49,7 +49,7 @@ function UploadItem() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        document.body.classList.add('disable-scroll')
+        document.body.style.overflow="hidden"
         const formdata = new FormData(e.target)
 
         try {
@@ -98,11 +98,11 @@ function UploadItem() {
                 resetForm()
             }
             setLoading(false)
-            document.body.classList.remove('disable-scroll')
+            document.body.style.overflow="auto"
 
         } catch (error) {
             setLoading(false)
-            document.body.classList.remove('disable-scroll')
+            document.body.style.overflow="auto"
             console.log(error)
         }
 

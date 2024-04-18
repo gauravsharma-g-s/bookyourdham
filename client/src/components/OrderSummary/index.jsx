@@ -53,8 +53,7 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
         }
         else{
           setsubTotal(totalPrice)  
-        }
-        
+        }                               // eslint-disable-next-line
     },[totalPrice])
     return (
         <div className='w-[80%]'>
@@ -86,7 +85,7 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
                     <div className='relative'>
                         <div className="mt-1 flex absolute left-0">
                             {/* Display applied coupon */}
-                            <p className="bg-blue-300 rounded px-1 py-0.5 uppercase text-[0.5rem]">
+                            <p className="bg-red-300 rounded px-1 py-0.5 uppercase text-[0.5rem]">
                                 {appliedCoupon}
                             </p>
                             {/* Button to remove coupon */}
@@ -100,10 +99,10 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
                     </div>
 
                 )}
-                {discount != 0 && <h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
+                {discount !== 0 && <h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
                 <h2 className='text-2xl mt-8'>Sub Total: &#x20b9; {subTotal}</h2>
                 <div className='flex justify-end'>
-                    <button onClick={()=> {setsubtotal(subTotal); return goToNextStep()}} className="bg-blue-600 text-white px-6 py-2 rounded-md mt-16 ">Next</button>
+                    <button onClick={()=> {setsubtotal(subTotal); return goToNextStep()}} className="bg-red-600 text-white px-6 py-2 rounded-md mt-16 ">Next</button>
                 </div>
             </div>
         </div>

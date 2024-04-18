@@ -104,6 +104,10 @@ ol {
     margin-bottomm:25px;
 }
 
+.prevent-scroll {
+  overflow:hidden;
+}
+
 
 
 

@@ -38,7 +38,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <input
                             type="text"
                             id="name"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             placeholder="Enter your name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -50,7 +50,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <input
                             type="email"
                             id="email"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -60,7 +60,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                     <div className="mb-4">
                         <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">Mobile</label>
                         <input type="tel" id="mobile" name="phone"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             pattern="^(\+91)?\d{10}$" maxlength="13" placeholder="+91XXXXXXXXXX" required value={mobile}
                             onChange={(e) => setMobile(e.target.value)}></input>
                     </div>
@@ -70,7 +70,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <input
                             type="date"
                             id="date"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             value={date}
                             onChange={(e) => setdate(e.target.value)}
                             required
@@ -81,7 +81,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <input
                             type="time"
                             id="time"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             value={time}
                             onChange={(e) => setTime(e.target.value)}
                             required
@@ -91,7 +91,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <label htmlFor="address" className="block text-sm font-medium text-gray-700">Delivery Address</label>
                         <textarea
                             id="address"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             rows="4"
                             placeholder="Enter your delivery address"
                             value={address}
@@ -104,7 +104,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
                         <label htmlFor="pin" className="block text-sm font-medium text-gray-700">Pin Code</label>
                         <input
                             id="pin"
-                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                            className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                             type='number'
                             placeholder="Pincode"
                             value={pin}
@@ -117,7 +117,7 @@ function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500"
+                        className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500"
                     >
                         Place Order
                     </button>

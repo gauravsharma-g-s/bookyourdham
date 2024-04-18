@@ -1,8 +1,6 @@
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { jwtDecode } from 'jwt-decode';
+
 import { setLogUser } from 'state'
 import { isAccessTokenExpired } from 'util/index';
 function Profile({ displayToast = () => { } }) {
@@ -42,11 +40,11 @@ function Profile({ displayToast = () => { } }) {
 
         try {
             if (isAccessTokenExpired(accessToken)) {
-                const refreshTokenRes = await fetch(`${baseUrl}/refresh`, {
+                await fetch(`${baseUrl}/refresh`, {
                     method: 'GET',
                     credentials: 'include', // Include cookies in the request
                 })
-                const refreshTokenResponse = await refreshTokenRes.json()
+                
 
             }
             const editResp = await fetch(`${baseUrl}/editUser`, {
@@ -76,7 +74,7 @@ function Profile({ displayToast = () => { } }) {
             setState(user.state)
             const url = `${cloudbaseurl}/${user.picturePath}`
             setImageUrl(url)
-        }
+        }                                                            // eslint-disable-next-line
     }, [user])
 
     return (
@@ -84,7 +82,7 @@ function Profile({ displayToast = () => { } }) {
             <form onSubmit={handleSubmit} className='mt-8'>
                 <div className='flex flex-col sm:flex-row gap-16 justify-center items-center sm:items-start'>
                     <div>
-                        <div className='bg-red-500 w-[8rem] h-[10rem] rounded-lg'>{imageUrl && <img src={imageUrl} className='w-[8rem] h-[10rem]' />}
+                        <div className='bg-red-500 w-[8rem] h-[10rem] rounded-lg'>{imageUrl && <img src={imageUrl} className='w-[8rem] h-[10rem]' alt='' />}
                         </div>
                         <input
                             type="file"

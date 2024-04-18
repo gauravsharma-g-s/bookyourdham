@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Stepper({ currentStep, numberOfSteps }) {
-    const activeColor = (index) => currentStep >= index ? 'bg-blue-500' : 'bg-gray-300'
+    const activeColor = (index) => currentStep >= index ? 'bg-red-500' : 'bg-gray-300'
     const isFinalStep = (index) => index === numberOfSteps - 1
     return (
         <div className="flex  flex-col items-center">

@@ -1,16 +1,19 @@
 import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faCalendarDay, faCreditCard, faLocationDot, faUtensils } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, CSSProperties } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { displayToast } from 'util'
 import { setBuffets, setCart } from 'state'
 import { useNavigate } from 'react-router-dom'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { RingLoader } from 'react-spinners'
+
 
 function HomePage() {
   const [addToCartInd, setAddToCartInd] = useState(null)
+  const [loading,setLoading] = useState(false)
   // Order steps
   const steps = [{ number: 1, icon: faUtensils, text: 'Select your dishes from our diverse menu for your event.' },
   { number: 2, icon: faCalendarDay, text: 'Pick the date and time for your delivery' },
@@ -37,17 +40,20 @@ function HomePage() {
   // Get all Buffets
   const getAllBuffets = async () => {
     try {
+      document.body.style.overflow="hidden"
       const buffetRes = await fetch(`${baseUrl}/buffet/getAllBuffets`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
         }
       })
-
       const buffetResponse = await buffetRes.json()
       dispatch(setBuffets({ buffets: buffetResponse }))
+      setLoading(false)
+      document.body.style.overflow="auto"
     } catch (error) {
       displayToast("Internal Server error", 3)
+      document.body.style.overflow="auto"
     }
   }
 
@@ -83,23 +89,40 @@ function HomePage() {
     }
   }
 
-
+  // Loader properties overriding     
+  const override: CSSProperties = {
+    left: '50%',
+    top:'40%',
+    position: 'absolute'
+  }
   // Get all Buffets on initial render
   useEffect(() => {
+    setLoading(true)
     getAllBuffets()
     window.scrollTo(0, 0)
     AOS.init()
-    AOS.refresh()
+    AOS.refresh()            // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     setBuffet(allBuffets)
-  }, [allBuffets])
+  }, [allBuffets])         // eslint-disable-next-line
 
   return (
     <div>
+   <div
+    style={{
+      position:'absolute',
+      zIndex:4,
+      height: "50vh", // Makes the container take the full height of the viewport
+      width:"100%"
+    }}
+  >
+    <RingLoader loading={loading} color="red" cssOverride={override} />
+  </div>
       {/* Desktop or Big Screen View */}
       <div className='hidden sm:block'>
+      
         <div className='flex lg:mx-28 md:mx-16 sm:mx-8 justify-between'>
           <div className='left w-[50%] mt-[2rem] xl:mt-[2rem] 2xl:mt-18 3xl:mt-[10rem]'>
             <span className='text-2xl lg:text-4xl xl:text-5xl 2xl:text-7xl 3xl:text-8xl font-bold lg:leading-[3rem] xl:leading-[4rem] 2xl:leading-[6rem] 3xl:leading-[8rem]'>Be it a small affair or a grand affair, <span className='text-red-500'>bookyourdham</span> takes care of your food affair</span>
@@ -121,7 +144,7 @@ function HomePage() {
           </div>
           <div className='right w-[40%] mt-[2rem] md:mt-[0.5rem] lg:mt-[2rem] xl:mt-[2.2rem] 2xl:mt-[4rem] 3xl:mt-[8rem] '>
             <div>
-              <img src='./assets/pan.png' alt='hero-image' />
+              <img src='./assets/pan.png' alt='hero' />
             </div>
           </div>
         </div>
@@ -147,12 +170,12 @@ function HomePage() {
           </div>
           <div className='mt-[2rem]'>
             <div>
-              <img src='./assets/pan.png' alt='hero-image' />
+              <img src='./assets/pan.png' alt='hero' />
             </div>
           </div>
         </div>
       </div>
-
+     
       {/* Trending Packs */}
       <div className='mt-24 py-8 bg-[#deb887]'>
         <div className='text-center'>
@@ -160,12 +183,12 @@ function HomePage() {
           <h3 className='text-lg text-slate-500'>Ideal for small Functions or Parties</h3><br />
         </div>
         <div className='flex justify-center sm:gap-5 lg:gap-8 flex-wrap'>
-
+        
           {
             buffets?.map((buffet, index) => (
               <div className='w-[310px] h-[450px] rounded border-4 mb-[1.2rem] sm:mb-0 relative shadow-xl shadow-[#5c5b5b] ' key={buffet._id} data-aos="zoom-in" >
                 <div className='p-4'>
-                  <img className='' src={`${cloudinaryUrl}/${buffet.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} />
+                  <img className='' src={`${cloudinaryUrl}/${buffet?.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} alt=''/>
                 </div>
                 <div className='flex justify-between mx-2'>
                   <div className='font-bold text-xl'>

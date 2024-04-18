@@ -7,10 +7,9 @@ import { displayToast } from 'util';
 import { emptyCart } from 'state';
 
 function PaymentTabs({ setCartEmpty, orderDetails, goToPreviousStep }) {
-    const [activeTab, setActiveTab] = useState('online');
+    const [activeTab, setActiveTab] = useState('online')
 
     const url = process.env.REACT_APP_SERVER_URL
-    // const cart = useSelector(state=>state.cart)
     const user = useSelector(state => state.user)
     const token = useSelector(state => state.token)
 
@@ -49,13 +48,13 @@ function PaymentTabs({ setCartEmpty, orderDetails, goToPreviousStep }) {
         <div className="max-w-md mx-auto bg-white rounded-md shadow-md relative ">
             <div className="flex">
                 <div
-                    className={`flex-1 text-center py-2 cursor-pointer ${activeTab === 'online' ? 'bg-blue-500 text-white' : 'text-gray-600'}`}
+                    className={`flex-1 text-center py-2 cursor-pointer ${activeTab === 'online' ? 'bg-red-500 text-white' : 'text-gray-600'}`}
                     onClick={() => handleTabChange('online')}
                 >
                     Online Payment
                 </div>
                 <div
-                    className={`flex-1 text-center py-2 cursor-pointer ${activeTab === 'cash' ? 'bg-blue-500 text-white' : 'text-gray-600'}`}
+                    className={`flex-1 text-center py-2 cursor-pointer ${activeTab === 'cash' ? 'bg-red-500 text-white' : 'text-gray-600'}`}
                     onClick={() => handleTabChange('cash')}
                 >
                     Cash on Delivery
@@ -77,8 +76,8 @@ function PaymentTabs({ setCartEmpty, orderDetails, goToPreviousStep }) {
                         </ul>
                         <button
                             type="submit"
-                            className=" bg-blue-500 text-white py-2 mx-4 rounded-md
-                             hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500 px-6  md:absolute md:left-0 md:bottom-4 md:right-0"
+                            className=" bg-red-500 text-white py-2 mx-4 rounded-md
+                             hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500 px-6  md:absolute md:left-0 md:bottom-4 md:right-0"
                             onClick={makeOrder}
                         >
                             Place your Order

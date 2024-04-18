@@ -35,7 +35,7 @@ function Payment({ goToPreviousStep }) {
             <input
               type="text"
               id="cardNumber"
-              className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
               placeholder="Enter card number"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
@@ -50,7 +50,7 @@ function Payment({ goToPreviousStep }) {
               <input
                 type="text"
                 id="expiryDate"
-                className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                 placeholder="MM/YY"
                 value={expiryDate}
                 onChange={handleExpiryDateChange}
@@ -62,7 +62,7 @@ function Payment({ goToPreviousStep }) {
               <input
                 type="text"
                 id="cvv"
-                className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+                className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
                 placeholder="CVV"
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value)}
@@ -78,7 +78,7 @@ function Payment({ goToPreviousStep }) {
             <input
               type="text"
               id="cardHolder"
-              className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-red-500"
               placeholder="Enter card Holder name"
               value={cardHolder}
               onChange={(e) => setCardHolder(e.target.value)}
@@ -89,7 +89,7 @@ function Payment({ goToPreviousStep }) {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500 "
+            className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500 "
           >
             Pay Now
           </button>

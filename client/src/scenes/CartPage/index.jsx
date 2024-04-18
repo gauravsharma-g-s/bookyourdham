@@ -3,7 +3,6 @@ import CartItems from 'components/CartItems';
 import React, { useEffect, useState } from 'react';
 import MobileOrderSummary from 'components/OrderSummary/MobileOrderSummary';
 import Address from 'components/Address';
-import Payment from 'components/Payment';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCart } from 'state';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +16,7 @@ function CartPage() {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [cartItems, setCartItems] = useState([])
   const [orderDetails, setOrderDetails] = useState(null)
+  const [subtotal, setsubtotal] = useState(0)
   //let orderDetails = {}
   const NUMBER_OF_STEPS = 3
   // Fetching from store
@@ -47,7 +47,7 @@ function CartPage() {
       }
     })
     const cartResJson = await cartRes.json()
-    if (cartResJson.msg != 'Cart is Empty') {
+    if (cartResJson.msg !== 'Cart is Empty') {
       dispatch(setCart({ cart: cartResJson }))
     }
     if (cartResJson.msg === 'Cart is Empty') {
@@ -58,7 +58,7 @@ function CartPage() {
   useEffect(() => {
     getMyCart()
     setCartItems(cart?.items)
-    window.scrollTo(0,0)
+    window.scrollTo(0,0)        // eslint-disable-next-line
   }, [cartItems])
 
 
@@ -69,10 +69,10 @@ function CartPage() {
         CartEmpty !== 0 && <div>
           <div className='block sm:hidden '>
             {
-              currentStep === 0 && <MobileOrderSummary setCurrentStep={setCurrentStep} />
+              currentStep === 0 && <MobileOrderSummary subtotal={subtotal} setsubTotal={setsubtotal} setCurrentStep={setCurrentStep} />
             }
             {
-              currentStep === 1 && <Address orderDetails={orderDetails} setOrderDetails={setOrderDetails} goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
+              currentStep === 1 && <Address  subtotal={subtotal} orderDetails={orderDetails} setOrderDetails={setOrderDetails} goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
             }
             {
               currentStep === 2 && <PaymentTabs setCartEmpty={setCartEmpty} orderDetails={orderDetails} goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} />
@@ -88,7 +88,7 @@ function CartPage() {
               <CartItems currentStep={currentStep} setCartEmpty={setCartEmpty} cartItems={cartItems} setCartItems={setCartItems} />
             </div>
 
-            <Order setCartEmpty={setCartEmpty} orderDetails={orderDetails} setOrderDetails={setOrderDetails} itemCount={cart?.items?.length} goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} currentStep={currentStep} NUMBER_OF_STEPS={NUMBER_OF_STEPS} />
+            <Order subtotal={subtotal} setsubtotal={setsubtotal} setCartEmpty={setCartEmpty} orderDetails={orderDetails} setOrderDetails={setOrderDetails} itemCount={cart?.items?.length} goToNextStep={goToNextStep} goToPreviousStep={goToPreviousStep} currentStep={currentStep} NUMBER_OF_STEPS={NUMBER_OF_STEPS} />
           </div>
         </div>
       }
