@@ -1,4 +1,4 @@
-const whitelist = ['http://localhost:3000', 'http://192.168.226.178:3000']
+const whitelist = ['http://localhost:3000', 'https://bookyourdham.onrender.com']
 const corsOption = {
     origin : (origin,callback) => {
         if(whitelist.indexOf(origin) != -1 || !origin) {
