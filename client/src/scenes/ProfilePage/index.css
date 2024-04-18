@@ -1,0 +1,15 @@
+.userButton{
+    @apply rounded-xl px-4 py-1
+}
+
+/* Inactive button style */
+.inactiveButton {
+    background-color: #E5E7EB; 
+    color: #6B7280; 
+}
+
+/* Active button style */
+.activeButton {
+    background-color: #ef4444; 
+    color: white; 
+}

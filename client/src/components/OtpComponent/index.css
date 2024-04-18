@@ -1,0 +1,18 @@
+.otpInput {
+    margin: 5px;
+    text-align: center;
+    font-size: 1.2em;
+    color: black;
+}
+
+.otpInput {
+    @apply xxs:w-[40px] xxs:h-[40px] w-[30px] h-[30px]
+}
+
+.otpHeading {
+    @apply text-lg xxs:text-2xl text-white mb-[2rem] xxs:mb-[4rem]
+}
+
+.otpSubmit {
+    @apply bg-red-500 mt-[2rem] text-white
+}
