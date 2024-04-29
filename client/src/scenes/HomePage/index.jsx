@@ -157,12 +157,12 @@ function HomePage() {
           <span className='text-4xl font-bold leading-snug'>Be it a small affair or a grand affair, <span className='text-red-500'>bookyourdham</span> takes care of your food affair</span>
           <h3 className='text-base text-slate-500 mt-4'>From intimate gatherings to weddings in full sway, 'Book Your Dham' ensures your food's just a click away</h3>
           <div className='flex justify-between mt-8'>
-            <button className="rounded-full bg-red-500 text-white px-3 py-2 text-[0.8rem]">Book your Order
+            <button className="rounded-full bg-red-500 text-white px-3 py-2 text-[0.8rem]" onClick={() => { navigate('/menu'); navigate(0) }}>Book your Order
               <span className="ps-4 ">
                 <FontAwesomeIcon icon={faArrowRight} />
               </span>
             </button>
-            <button className="rounded-full bg-zinc-300 px-3 py-2 text-[0.8rem]">How to Order
+            <button className="rounded-full bg-zinc-300 px-3 py-2 text-[0.8rem]"  onClick={scrollToHowToOrder}>How to Order
               <span className="ps-4 pt-[2rem]">
                 <FontAwesomeIcon icon={faArrowRight} />
               </span>

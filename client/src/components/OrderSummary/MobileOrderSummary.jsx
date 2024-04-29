@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
@@ -6,11 +6,13 @@ function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
     const [coupon, setCoupon] = useState(''); // Input field value
     const [couponStatus, setCouponStatus] = useState(null); // Coupon status: 'applied', 'wrong'
     const [appliedCoupon, setAppliedCoupon] = useState(null); // Applied coupon value
-
+    const [couponname,setCouponName] = useState(null)
+    // All coupons
+    const coupons = ['NEW30','FAST20','FUN15']
     // Proceed to address step
     const goToAddress = () => {
         return setCurrentStep(prev => prev + 1);
-    };
+    }
 
     // Retrieve cart state from Redux store
     const cart = useSelector(state => state.cart)
@@ -18,41 +20,61 @@ function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
     const itemCount = cart?.items?.length
     // Calculate total price of items in the cart
     const totalPrice = cart?.items?.reduce((sum, cartItem) => sum + cartItem.price, 0)
-    setsubTotal(totalPrice)
+    const [total,setTotal] = useState(totalPrice)
     const [discount, setDiscount] = useState(0)
-
-    // Sub-total price after discount
-    // const subTotal = null
 
     // Function to handle applying a coupon
     const handleApplyCoupon = () => {
         // Check if the coupon is not empty
-        if (coupon.trim() !== '') {
+        const enteredCoupon = coupon.trim().toUpperCase()
+        if (enteredCoupon.trim() !== '') {
             // Set coupon status to 'applied', store applied coupon, and clear input field
+            const isValid = coupons?.includes(enteredCoupon)
+            if(isValid){
             setCouponStatus('applied')
-            const saving = 500
+            setCouponName(enteredCoupon)
+            const saving = totalPrice * (parseInt(enteredCoupon.substring(enteredCoupon.length-2)))/100
             setDiscount(saving)
             const discountedprice = totalPrice - saving
-            setsubTotal(discountedprice)
+            setTotal(discountedprice)
             setAppliedCoupon(coupon.trim())
             setCoupon('')
-        } else {
-            // Set coupon status to 'wrong' if the coupon is empty
-            setCouponStatus('wrong')
         }
-    };
+        else {
+            // Set coupon status to 'Invaid' if the coupon is Invalid
+            setCouponStatus('Invalid')
+        }
+        } else {
+            // Set coupon status to 'Empty' if the coupon is empty
+            setCouponStatus('Empty')
+        }
+    }
 
     // Function to handle removing a coupon
     const handleRemoveCoupon = () => {
         // Reset coupon state and status
-        setCoupon('');
+        setCoupon('')
+        setCouponName(null)
         const saving = 0
         setDiscount(saving)
         const discountedprice = totalPrice - saving
-        setsubTotal(discountedprice)
+        setTotal(discountedprice)
         setCouponStatus(null);
         setAppliedCoupon(null);
-    };
+    }
+
+    useEffect(() => {
+        if (couponStatus === 'applied') {
+            const discountPercent = couponname ? parseInt(couponname.substring(couponname.length - 2)) : ''
+            const saving = totalPrice * discountPercent / 100
+            setDiscount(saving)
+            const discountedprice = totalPrice - saving;
+            setTotal(discountedprice);
+        }
+        else {
+            setTotal(totalPrice)
+        }                               // eslint-disable-next-line
+    }, [totalPrice])
 
     return (
         <div>
@@ -78,14 +100,16 @@ function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
                         {couponStatus === 'applied' ? 'Applied' : 'Apply'}
                     </button>
                     {/* Display error message if coupon is invalid */}
-                    {couponStatus === 'wrong' && <p className="text-xs text-red-500">Coupon Invalid</p>}
+                    {couponStatus === 'Invalid' && <p className="text-xs text-red-500">Coupon Invalid</p>}
+                    {/* Display error message if coupon is invalid */}
+                    {couponStatus === 'Empty' && <p className="text-xs text-red-500">Coupon Empty</p>}
                 </div>
                 {/* Display applied coupon and remove button if coupon is applied */}
                 {couponStatus === 'applied' && (
                     <div className='relative'>
                         <div className="mt-1 flex absolute -left-24">
                             {/* Display applied coupon */}
-                            <p className="bg-blue-300 rounded px-1 py-0.5 uppercase text-[0.5rem]">
+                            <p className="bg-red-300 rounded px-1 py-0.5 uppercase text-[0.5rem]">
                                 {appliedCoupon}
                             </p>
                             {/* Button to remove coupon */}
@@ -102,10 +126,10 @@ function MobileOrderSummary({subtotal, setsubTotal, setCurrentStep }) {
 
                 {/* Subtotal and proceed to pay button */}
                 {discount!==0 &&<h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
-                <h2 className='text-xl mt-6'>Sub Total &#x20b9; {subtotal}</h2>
+                <h2 className='text-xl mt-6'>Sub Total &#x20b9; {total}</h2>
                 <button
                     className='bg-red-500 text-white py-2 px-[4rem] rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500 mt-8'
-                    onClick={goToAddress}
+                    onClick={()=> {setsubTotal(total); return goToAddress()}}
                 >
                     Proceed to Pay
                 </button>

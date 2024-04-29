@@ -1,44 +1,57 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
+function OrderSummary({ setsubtotal, goToNextStep }) {
     // State variables 
     const [coupon, setCoupon] = useState(''); // Input field value
     const [couponStatus, setCouponStatus] = useState(null); // Coupon status: 'applied', 'wrong'
     const [appliedCoupon, setAppliedCoupon] = useState(null); // Applied coupon value
+    const [couponname, setCouponName] = useState(null)
 
+    // All coupons
+    const coupons = ['NEW30', 'FAST20', 'FUN15']
     // Retrieve cart state from Redux store
     const cart = useSelector(state => state.cart);
     // Calculate total number of items in the cart
     const itemCount = cart?.items?.length;
     // Calculate total price of items in the cart
     const totalPrice = cart?.items?.reduce((sum, cartItem) => sum + cartItem.price, 0);
-    const [subTotal,setsubTotal] = useState(totalPrice)
+    const [subTotal, setsubTotal] = useState(totalPrice)
 
     const [discount, setDiscount] = useState(0)
 
     // Function to handle applying a coupon
     const handleApplyCoupon = () => {
         // Check if the coupon is not empty
-        if (coupon.trim() !== '') {
+        const enteredCoupon = coupon.trim().toUpperCase()
+        if (enteredCoupon.trim() !== '') {
             // Set coupon status to 'applied', store applied coupon, and clear input field
-            setCouponStatus('applied')
-            const saving = 500
-            setDiscount(saving)
-            const discountedprice = totalPrice - saving
-            setsubTotal(discountedprice)
-            setAppliedCoupon(coupon.trim())
-            setCoupon('')
+            const isValid = coupons?.includes(enteredCoupon)
+            if (isValid) {
+                setCouponStatus('applied')
+                setCouponName(enteredCoupon)
+                const saving = totalPrice * (parseInt(enteredCoupon.substring(enteredCoupon.length - 2))) / 100
+                setDiscount(saving)
+                const discountedprice = totalPrice - saving
+                setsubTotal(discountedprice)
+                setAppliedCoupon(coupon.trim())
+                setCoupon('')
+            }
+            else {
+                // Set coupon status to 'Invaid' if the coupon is Invalid
+                setCouponStatus('Invalid')
+            }
         } else {
-            // Set coupon status to 'wrong' if the coupon is empty
-            setCouponStatus('wrong')
+            // Set coupon status to 'Empty' if the coupon is empty
+            setCouponStatus('Empty')
         }
-    };
+    }
 
     // Function to handle removing a coupon
     const handleRemoveCoupon = () => {
         // Reset coupon state and status
         setCoupon('');
+        setCouponName(null)
         const saving = 0
         setDiscount(saving)
         const discountedprice = totalPrice - saving
@@ -47,14 +60,18 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
         setAppliedCoupon(null);
     }
 
-    useEffect(()=>{
-        if(couponStatus==='applied'){
-            setsubTotal(totalPrice-500)
+    useEffect(() => {
+        if (couponStatus === 'applied') {
+            const discountPercent = couponname ? parseInt(couponname.substring(couponname.length - 2)) : ''
+            const saving = totalPrice * discountPercent / 100
+            setDiscount(saving)
+            const discountedprice = totalPrice - saving;
+            setsubTotal(discountedprice);
         }
-        else{
-          setsubTotal(totalPrice)  
+        else {
+            setsubTotal(totalPrice)
         }                               // eslint-disable-next-line
-    },[totalPrice])
+    }, [totalPrice])
     return (
         <div className='w-[80%]'>
             <div className="max-w-md mx-auto sm:p-4 md:p-10 bg-gray-100 rounded-md shadow-lg">
@@ -78,7 +95,9 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
                         {couponStatus === 'applied' ? 'Applied' : 'Apply'}
                     </button>
                     {/* Display error message if coupon is invalid */}
-                    {couponStatus === 'wrong' && <p className="text-xs text-red-500">Coupon Invalid</p>}
+                    {couponStatus === 'Invalid' && <p className="text-xs text-red-500">Coupon Invalid</p>}
+                    {/* Display error message if coupon is invalid */}
+                    {couponStatus === 'Empty' && <p className="text-xs text-red-500">Coupon Empty</p>}
                 </div>
                 {/* Display applied coupon and remove button if coupon is applied */}
                 {couponStatus === 'applied' && (
@@ -102,7 +121,7 @@ function OrderSummary({subtotal, setsubtotal, goToNextStep }) {
                 {discount !== 0 && <h2 className='text-xl mt-4'>Savings: &#x20b9; {discount}</h2>}
                 <h2 className='text-2xl mt-8'>Sub Total: &#x20b9; {subTotal}</h2>
                 <div className='flex justify-end'>
-                    <button onClick={()=> {setsubtotal(subTotal); return goToNextStep()}} className="bg-red-600 text-white px-6 py-2 rounded-md mt-16 ">Next</button>
+                    <button onClick={() => { setsubtotal(subTotal); return goToNextStep() }} className="bg-red-600 text-white px-6 py-2 rounded-md mt-16 ">Next</button>
                 </div>
             </div>
         </div>

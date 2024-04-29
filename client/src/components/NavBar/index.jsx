@@ -60,7 +60,7 @@ function NavBar() {
     <header className='sticky top-0' style={{ zIndex: '100' }}>
       <div className='hidden sm:block bg-white w-full shadow-lg'>
         <nav className='flex lg:mx-28 md:mx-16 sm:mx-8 my-4 justify-between lg:pb-4'>
-          <h1 className='text-red-500 italic font-bold text-2xl w-[50%] pt-2' style={{'cursor':'pointer'}} onClick={()=>{navigate('/');navigate(0)}}>bookyourdham</h1>
+          <h1 className='text-red-500 italic font-bold text-2xl w-[50%] pt-2 uppercase' style={{'cursor':'pointer'}} onClick={()=>{navigate('/');navigate(0)}}>bookyourdham</h1>
           <div className='flex justify-between  gap-16 w-[50%] pt-2 mr-4'>
             <div className='flex gap-16 sm:gap-4 md:gap-8 lg:gap-[3rem] xl:gap-24 2xl:gap-[9rem] text-xl  text-gray-500 font-semibold w-[30%]'>
               <Link to='/' className={`${active === 0 ? 'text-red-500' : ''} nav`}>Home</Link>
@@ -97,7 +97,7 @@ function NavBar() {
       {/* Small screens Navigation menu*/}
       <div className='sm:hidden bg-white w-full z-5 shadow-lg'>
         <nav className='flex lg:mx-24 md:mx-16 sm:mx-8 my-4 justify-around'>
-          <h1 className='text-red-500 italic font-bold text-2xl w-[50%] pt-2 mx-4 mb-2 text-center'>bookyourdham</h1>
+          <h1 className='text-red-500 italic font-bold text-2xl w-[50%] pt-2 mx-4 mb-2 text-center uppercase'>bookyourdham</h1>
           {user && <button className='absolute right-4 top-1.5' onClick={handleLogout}>
             <FontAwesomeIcon icon={faRightFromBracket} />
           </button>}
