@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Payment from '.';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { displayToast } from 'util';
 import { emptyCart } from 'state';
 
@@ -10,8 +10,8 @@ function PaymentTabs({ setCartEmpty, orderDetails, goToPreviousStep }) {
     const [activeTab, setActiveTab] = useState('online')
 
     const url = process.env.REACT_APP_SERVER_URL
-    const user = useSelector(state => state.user)
-    const token = useSelector(state => state.token)
+    const user = JSON.parse(localStorage.getItem('user'))
+    const token = localStorage.getItem('token')
 
     const dispatch = useDispatch()
 

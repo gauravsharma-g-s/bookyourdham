@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { displayToast } from 'util'
 import { setCart, setExtras, setMenu } from 'state'
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos'
 import "aos/dist/aos.css";
@@ -16,9 +16,9 @@ function MenuPage() {
   const [addToCartInd, setAddToCartInd] = useState(null)
 
   /* Data From Store */
-  const token = useSelector(state => state.token)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const token = localStorage.getItem('token')
   const menuDishes = useSelector(state => state.menuDishes)
-  const user = useSelector(state => state.user)
   const extras = useSelector(state => state.extras)
   const dispatch = useDispatch()
 
@@ -129,12 +129,14 @@ function MenuPage() {
   }
 
   useEffect(() => {
-    getMenuItems()
+    if (!menuDishes)
+      getMenuItems()
+    if (!extras)
       getAllExtras()
     window.scrollTo(0, 0)
     AOS.init();
     AOS.refresh();  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])          
+  }, [])
 
 
   // Get Menu Items and Extra Items
@@ -202,7 +204,7 @@ function MenuPage() {
           {menuItems?.map((menuItem, i) => (
             <div key={menuItem._id} className='rounded border-4 mb-[1.2rem] sm:mb-0' data-aos="zoom-in">
               <div className='w-[18rem] p-4'>
-                <img src={`${cloudinaryUrl}/${menuItem?.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} alt='menuitem'/>
+                <img src={`${cloudinaryUrl}/${menuItem?.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} alt='menuitem' />
               </div>
               <div className='p-4'>
                 <div className='flex justify-between mb-4'>
@@ -243,7 +245,7 @@ function MenuPage() {
           {extraItems?.map((extraItem, i) => (
             <div key={extraItem._id} className='rounded border-4 mb-[1.2rem] sm:mb-0' data-aos="zoom-in">
               <div className='w-[18rem] p-4'>
-                <img src={`${cloudinaryUrl}/${extraItem.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} alt='extraitem'/>
+                <img src={`${cloudinaryUrl}/${extraItem.picturePath}`} style={{ width: '18rem', height: '14rem', objectFit: 'cover' }} alt='extraitem' />
               </div>
               <div className='p-4'>
                 <div className='flex justify-between mb-4'>

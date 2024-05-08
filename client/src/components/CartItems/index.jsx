@@ -11,8 +11,8 @@ function CartItems({ currentStep, setCartItems, setCartEmpty }) {
   const baseUrl = process.env.REACT_APP_SERVER_URL;
   const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY;
   const [editedItems, setEditedItems] = useState({});
-  const user = useSelector(state => state.user);
-  const token = useSelector(state => state.token);
+  const user = JSON.parse(localStorage.getItem('user'))
+  const token = localStorage.getItem('token')
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();;
 

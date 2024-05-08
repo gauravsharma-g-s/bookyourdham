@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { setLogUser } from 'state'
 import { isAccessTokenExpired } from 'util/index';
 function Profile({ displayToast = () => { } }) {
     const [name, setName] = useState('');
@@ -14,12 +12,11 @@ function Profile({ displayToast = () => { } }) {
     const [imageUrl, setImageUrl] = useState(null)
     const baseUrl = process.env.REACT_APP_SERVER_URL
     const cloudbaseurl = process.env.REACT_APP_CLOUDINARY
-    const dispatch = useDispatch()
     const fileInputRef = useRef(null)
 
     // Accessingbfrom the store
-    const user = useSelector(state => state.user)
-    const accessToken = useSelector(state => state.token)
+    const user = JSON.parse(localStorage.getItem('user'))
+    const accessToken = localStorage.getItem('token')
 
     // Handle image file  select 
     const handleFileSelect = (event) => {
@@ -44,7 +41,7 @@ function Profile({ displayToast = () => { } }) {
                     method: 'GET',
                     credentials: 'include', // Include cookies in the request
                 })
-                
+
 
             }
             const editResp = await fetch(`${baseUrl}/editUser`, {
@@ -54,9 +51,7 @@ function Profile({ displayToast = () => { } }) {
             })
             const editResponse = await editResp.json()
             displayToast("Details Saved", 1)
-            dispatch(setLogUser({
-                user: editResponse
-            }))
+            localStorage.setItem('user', JSON.stringify(editResponse))
         } catch (error) {
             console.log(error)
         }
@@ -64,6 +59,7 @@ function Profile({ displayToast = () => { } }) {
     }
 
     useEffect(() => {
+        console.log("Update with user");
         if (user) {
             setName(user.name)
             setAddress(user.address)
@@ -75,7 +71,7 @@ function Profile({ displayToast = () => { } }) {
             const url = `${cloudbaseurl}/${user.picturePath}`
             setImageUrl(url)
         }                                                            // eslint-disable-next-line
-    }, [user])
+    }, [])
 
     return (
         <div>
@@ -111,7 +107,7 @@ function Profile({ displayToast = () => { } }) {
                                         className="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-500"
                                         placeholder="Enter your name"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) => { console.log(e.target.value); setName(e.target.value) }}
                                     />
                                 </div>
                                 <div className="mb-4">

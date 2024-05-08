@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
 
 function BottomNavComponent({ name, icon, setShowForm, active, setActive, i }) {
-  const user = useSelector(state => state.user) 
+  const user = JSON.parse(localStorage.getItem('user'))
   const navigate = useNavigate() 
 
   return (

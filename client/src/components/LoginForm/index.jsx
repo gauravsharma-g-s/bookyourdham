@@ -1,4 +1,4 @@
-import React, { useState,  CSSProperties } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import './index.css';
 import { faLock, faX, faEnvelope, faChild } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import { RingLoader } from 'react-spinners';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setLogin, setLogUser } from 'state';
+import { setCart } from 'state';
 
 function LoginForm({ setShowForm }) {
     const [registerForm, setRegisterForm] = useState(false);
@@ -76,6 +76,20 @@ function LoginForm({ setShowForm }) {
         }
     }
 
+    // Fetch cart items from API
+    const getMyCart = async (token,user) => {
+        const cartRes = await fetch(`${baseUrl}/cart/getCart/${user?._id}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        const cartResJson = await cartRes.json()
+        if (cartResJson.msg !== 'Cart is Empty') {
+            dispatch(setCart({ cart: cartResJson }))
+        }
+    }
+
     // Login User
     const handleLogin = async (data) => {
         setLoading(true)
@@ -86,19 +100,18 @@ function LoginForm({ setShowForm }) {
                 body: JSON.stringify(data)
             })
             const loginResponse = await loginRes.json()
+            console.log(loginResponse);
             if (loginRes.status === 400) {
                 displayToast("Email and password doesn't match!", 2)
                 setLoading(false)
             }
             else {
-                dispatch(setLogin({
-                    token: loginResponse.accessToken
-                }))
-                dispatch(setLogUser({
-                    user: loginResponse.user
-                }))
+                localStorage.setItem('user',JSON.stringify(loginResponse.user))
+                localStorage.setItem('token',loginResponse.accessToken)
                 setShowForm(false)
                 setLoading(false)
+               getMyCart(loginResponse.accessToken,loginResponse.user)
+
             }
 
         } catch (error) {

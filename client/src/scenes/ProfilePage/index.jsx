@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { displayToast } from 'util';
 import UploadItem from 'components/UploadItem';
 import YourOrder from 'components/YourOrder';
-import { useSelector } from 'react-redux'
 import AllOrders from 'components/AllOrders';
 
 
@@ -17,7 +16,7 @@ function ProfilePage() {
   const [isAllOrders, setIsAllOrders] = useState(false)
   const [activeTab,setActiveTab] = useState('profile')
 
-  const isAdmin = useSelector(state => state.user.admin)
+  const isAdmin = (JSON.parse(localStorage.getItem('user')))?.admin
 
   // CLicking on Your Profile
   const handleProfile = () => {

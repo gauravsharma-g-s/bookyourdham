@@ -21,8 +21,8 @@ function CartPage() {
   const NUMBER_OF_STEPS = 3
   // Fetching from store
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user)
-  const token = useSelector(state => state.token)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const token = localStorage.getItem('token')
   const cart = useSelector(state => state.cart)
 
   const cartLength = cart != null ? cart.items.length : 0

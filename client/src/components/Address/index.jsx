@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 
 function Address({ subtotal,setOrderDetails, goToNextStep, goToPreviousStep }) {
     // Fetching User from Store
-    const user = useSelector(state => state.user)
     const cart = useSelector(state => state.cart)
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);

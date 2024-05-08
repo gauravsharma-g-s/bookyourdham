@@ -4,8 +4,6 @@ import LoginForm from 'components/LoginForm/index.jsx'
 import './index.css'
 import { faBars, faCartShopping, faUser, faRightFromBracket, faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useDispatch, useSelector } from 'react-redux'
-import { setLogout } from 'state'
 import BottomNavComponent from './BottomNavComponent'
 
 function NavBar() {
@@ -14,12 +12,12 @@ function NavBar() {
   const [active, setActive] = useState(0)         // Check which button is active on bottom Navigation
   const [showForm, setShowForm] = useState(false);
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector(state => state.user)
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const handleLogout = () => {
-    dispatch(setLogout())
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     navigate('/')
   }
 

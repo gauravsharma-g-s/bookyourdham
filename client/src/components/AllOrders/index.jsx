@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const AllOrders = () => {
     const [orders, setOrders] = useState([]);
     const [expandedOrder, setExpandedOrder] = useState(null);
-    const token = useSelector(state => state.token)
-    
+    const token = localStorage.getItem('token')
+
     // backend Urls
     const url = process.env.REACT_APP_SERVER_URL;
     const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY

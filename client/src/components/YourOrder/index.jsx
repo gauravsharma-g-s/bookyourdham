@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './index.css'
-import { useSelector } from 'react-redux';
 
 const YourOrder = () => {
   const url = process.env.REACT_APP_SERVER_URL
   const [orders, setOrders] = useState(null)
   const [openDetails, setOpenDetails] = useState(false)
 
-  const user = useSelector(state => state.user)
-  const token = useSelector(state => state.token)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const token = localStorage.getItem('token')
   const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY
 
   // Fetch all the orders

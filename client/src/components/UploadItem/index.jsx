@@ -1,5 +1,4 @@
 import React, { useRef, useState, CSSProperties } from 'react'
-import { useSelector } from 'react-redux'
 import { RingLoader } from 'react-spinners';
 import { displayToast, isAccessTokenExpired } from 'util';
 import './index.css'
@@ -16,7 +15,7 @@ function UploadItem() {
     const [loading, setLoading] = useState(false)
 
     // Accessing from the store
-    const accessToken = useSelector(state => state.token)
+    const accessToken = localStorage.getItem('token')
 
     // Handle image file  select 
     const handleFileSelect = (event) => {
